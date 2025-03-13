@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}DG TWIN MARKET{% endblock %}</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .header {
+        background-color: #2c5282;
+        color: white;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .app-name {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-decoration: none;
+        color: white;
+      }
+
+      .auth-links {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .auth-links a {
+        color: white;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border: 1px solid white;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+      }
+
+      .auth-links a:hover {
+        background-color: white;
+        color: #2c5282;
+      }
+
+      .content {
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <a href="/" class="app-name">DG TWIN MARKET</a>
+      <div class="auth-links">
+        <a href="#">Login</a>
+        <a href="#">Sign Up</a>
+      </div>
+    </header>
+
+    <main class="content">{% block content %} {% endblock %}</main>
+  </body>
+</html>
