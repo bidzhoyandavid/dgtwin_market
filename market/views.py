@@ -6,3 +6,6 @@ from .models import Product
 def product_list(request):
     products = Product.objects.all()
     return render(request, 'market/product_list.html', {'products': products})
+
+def signup(request):
+    return render(request, 'market/signup.html')

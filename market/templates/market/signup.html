@@ -1,0 +1,91 @@
+{% extends 'market/base.html' %} {% block title %}Sign Up - DG TWIN MARKET
+{%endblock %} {% block content %}
+<div class="signup-container">
+  <h1>Choose Your Registration Type</h1>
+  <div class="registration-options">
+    <div class="option-card seller">
+      <h2>Register as a Seller</h2>
+      <p>Create an account to sell your products on our platform</p>
+      <a href="#" class="option-button">Register as Seller</a>
+    </div>
+    <div class="option-card buyer">
+      <h2>Register as a Buyer</h2>
+      <p>Create an account to browse and purchase products</p>
+      <a href="#" class="option-button">Register as Buyer</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .signup-container {
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .signup-container h1 {
+    color: #2c5282;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+  }
+
+  .registration-options {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .option-card {
+    background: white;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+    transition: transform 0.3s ease;
+  }
+
+  .option-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .option-card h2 {
+    color: #2c5282;
+    margin-bottom: 1rem;
+  }
+
+  .option-card p {
+    color: #4a5568;
+    margin-bottom: 1.5rem;
+  }
+
+  .option-button {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background-color: #2c5282;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  .option-button:hover {
+    background-color: #2b6cb0;
+  }
+
+  @media (max-width: 768px) {
+    .registration-options {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .option-card {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+</style>
+{% endblock %}
