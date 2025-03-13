@@ -44,7 +44,12 @@ MARKET{% endblock %} {% block content %}
       </div>
       <h2>Sign up with Email</h2>
       <p>Create an account using your email address</p>
-      <a href="#" class="signup-button email-button"> Continue with Email </a>
+      <a
+        href="{% url 'market:email_signup' %}"
+        class="signup-button email-button"
+      >
+        Continue with Email
+      </a>
     </div>
   </div>
 </div>
