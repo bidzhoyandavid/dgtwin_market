@@ -9,3 +9,6 @@ def product_list(request):
 
 def signup(request):
     return render(request, 'market/signup.html')
+
+def buyer_signup(request):
+    return render(request, 'market/buyer_signup.html')
