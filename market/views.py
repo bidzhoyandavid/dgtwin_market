@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_http_methods
 from .models import Product
 from .forms import UserRegistrationForm
 
@@ -34,3 +35,10 @@ def email_signup(request):
 @login_required
 def my_account(request):
     return render(request, 'market/my_account.html')
+
+@require_http_methods(["GET", "POST"])
+def logout_view(request):
+    if request.method == 'POST':
+        logout(request)
+        messages.success(request, 'You have been successfully logged out.')
+    return redirect('market:product_list')
