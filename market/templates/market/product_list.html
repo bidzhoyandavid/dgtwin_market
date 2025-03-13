@@ -1,0 +1,198 @@
+{% extends 'market/base.html' %} {% block title %}Products - DG TWIN MARKET {%
+spaceless %}{% endblock %} {% block content %}
+<div class="product-list-container">
+  <h1 class="page-title">Available Products</h1>
+
+  {% if messages %}
+  <div class="messages">
+    {% for message in messages %}
+    <div
+      class="message {% if message.tags %}message-{{ message.tags }}{% endif %}"
+    >
+      {{ message }}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %} {% if products %}
+  <div class="product-grid">
+    {% for product in products %}
+    <div class="product-card">
+      {% if product.image %}
+      <img
+        src="{{ product.image.url }}"
+        alt="{{ product.name }}"
+        class="product-image"
+      />
+      {% else %}
+      <div class="product-image-placeholder">
+        <svg viewBox="0 0 24 24" width="48" height="48" style="fill: #cbd5e0">
+          <path
+            d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+          />
+        </svg>
+      </div>
+      {% endif %}
+      <div class="product-info">
+        <h3 class="product-name">{{ product.name }}</h3>
+        <p class="product-description">
+          {{ product.description|truncatewords:20 }}
+        </p>
+        <div class="product-meta">
+          <span class="product-price">${{ product.price }}</span>
+          <span class="product-seller"
+            >Seller: {{ product.seller.username }}</span
+          >
+        </div>
+        <a href="#" class="view-product-btn">View Details</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="no-products">
+    <p>No products available at the moment.</p>
+  </div>
+  {% endif %}
+</div>
+
+<style>
+  .product-list-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .page-title {
+    font-size: 2rem;
+    color: #2d3748;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .messages {
+    margin-bottom: 2rem;
+  }
+
+  .message {
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+
+  .message-success {
+    background-color: #c6f6d5;
+    color: #2f855a;
+    border: 1px solid #9ae6b4;
+  }
+
+  .message-error {
+    background-color: #fed7d7;
+    color: #c53030;
+    border: 1px solid #feb2b2;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+  }
+
+  .product-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .product-image-placeholder {
+    width: 100%;
+    height: 200px;
+    background-color: #f7fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-info {
+    padding: 1.5rem;
+  }
+
+  .product-name {
+    font-size: 1.25rem;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+  }
+
+  .product-description {
+    color: #4a5568;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+  }
+
+  .product-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .product-price {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #2c5282;
+  }
+
+  .product-seller {
+    font-size: 0.875rem;
+    color: #718096;
+  }
+
+  .view-product-btn {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #2c5282;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+  }
+
+  .view-product-btn:hover {
+    background-color: #2b6cb0;
+  }
+
+  .no-products {
+    text-align: center;
+    padding: 3rem;
+    background: white;
+    border-radius: 8px;
+    color: #4a5568;
+  }
+
+  @media (max-width: 768px) {
+    .product-list-container {
+      padding: 1rem;
+    }
+
+    .product-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+{% endblock %}
