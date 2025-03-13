@@ -1,4 +1,5 @@
 .env
 /venv/ 
 /core/__pycache__/
-
+/market/__pycache__/
+/market/migrations/__pycache__/
