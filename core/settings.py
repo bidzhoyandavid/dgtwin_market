@@ -17,6 +17,15 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
+# Debug information for environment variables
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
+
+if not GOOGLE_CLIENT_ID or not GOOGLE_CLIENT_SECRET:
+    print("Warning: Google OAuth credentials are not set in environment variables!")
+    print(f"GOOGLE_CLIENT_ID: {GOOGLE_CLIENT_ID}")
+    print(f"GOOGLE_CLIENT_SECRET: {GOOGLE_CLIENT_SECRET}")
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -42,7 +51,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'market',
+    'django.contrib.sites',  # Required for allauth
+    'market.apps.MarketConfig',
+    # allauth apps
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +68,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Add the account middleware:
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -133,3 +150,59 @@ MEDIA_ROOT = os.path.join(BASE_DIR, os.getenv('MEDIA_ROOT', 'media'))
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Redirect URLs
+LOGIN_REDIRECT_URL = 'market:my_account'
+LOGOUT_REDIRECT_URL = 'market:product_list'
+ACCOUNT_SIGNUP_REDIRECT_URL = 'market:my_account'
+
+# Social Account Settings
+SOCIALACCOUNT_LOGIN_ON_GET = True
+SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_SIGNUP_REDIRECT_URL = 'market:my_account'
+SOCIALACCOUNT_ADAPTER = 'allauth.socialaccount.adapter.DefaultSocialAccountAdapter'
+SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
+SOCIALACCOUNT_EMAIL_REQUIRED = True
+SOCIALACCOUNT_QUERY_EMAIL = True
+SOCIALACCOUNT_STORE_TOKENS = True
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': GOOGLE_CLIENT_ID,
+            'secret': GOOGLE_CLIENT_SECRET,
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'VERIFIED_EMAIL': True,
+        'OAUTH_PKCE_ENABLED': True,
+    }
+}
+
+# Authentication settings
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
+LOGIN_URL = 'account_login'
+
+# Additional allauth settings
+ACCOUNT_LOGIN_METHODS = {'email'}
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
+ACCOUNT_EMAIL_VERIFICATION = 'none'  # Change to 'mandatory' in production
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+
+
+# Email settings for development
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

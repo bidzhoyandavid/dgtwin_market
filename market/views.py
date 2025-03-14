@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from .models import Product
 from .forms import UserRegistrationForm
+from allauth.socialaccount.models import SocialAccount
 
 # Create your views here.
 
@@ -34,7 +35,18 @@ def email_signup(request):
 
 @login_required
 def my_account(request):
-    return render(request, 'market/my_account.html')
+    """
+    Display user's account information including connected social accounts
+    """
+    social_accounts = SocialAccount.objects.filter(user=request.user)
+    
+    context = {
+        'user': request.user,
+        'social_accounts': social_accounts,
+        'is_google_connected': social_accounts.filter(provider='google').exists(),
+    }
+    
+    return render(request, 'market/my_account.html', context)
 
 @require_http_methods(["GET", "POST"])
 def logout_view(request):
