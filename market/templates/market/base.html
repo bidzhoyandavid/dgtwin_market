@@ -192,7 +192,7 @@
           </div>
         </div>
         {% else %}
-        <a href="#">Login</a>
+        <a href="{% url 'market:login' %}">Login</a>
         <a href="{% url 'market:signup' %}">Sign Up</a>
         {% endif %}
       </nav>
